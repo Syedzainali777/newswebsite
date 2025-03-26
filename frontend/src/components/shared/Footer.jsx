@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -9,8 +9,11 @@ const Footer = () => {
         <div>
           <h2 className="text-lg font-semibold mb-4">About Us</h2>
           <p className="text-gray-400 text-sm">
-            We are committed to delivering the best service and information. Our
-            mission is to enrich lives through exceptional digital experiences.
+            UpdatedPakistani is your go-to source for the latest updates on
+            technology, telecom, business, sports, education, real estate, and
+            entertainment in Pakistan. We bring you the most relevant news and
+            updates on everything that matters. Stay ahead of the curve with UpdatedPakistani – Pakistan’s
+            hub for the most reliable and timely news!
           </p>
         </div>
 
@@ -49,13 +52,8 @@ const Footer = () => {
         <div>
           <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
 
-          <p className="text-gray-400 text-sm">
-            1234 Street Name, City, Country
-          </p>
+          <p className="text-gray-400 text-sm">Email: ali4205359@gmail.com</p>
 
-          <p className="text-gray-400 text-sm">Email: info@example.com</p>
-
-          <p className="text-gray-400 text-sm">Phone: +91 234 567 890</p>
         </div>
       </div>
 
@@ -82,12 +80,12 @@ const Footer = () => {
         </div>
 
         <p className="mt-4">
-          &copy; {new Date().getFullYear()} Morning Dispatch. All rights
+          &copy; {new Date().getFullYear()} Updated Pakistani. All rights
           reserved.
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

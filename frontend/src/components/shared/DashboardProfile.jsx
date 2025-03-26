@@ -94,7 +94,6 @@ const DashboardProfile = () => {
         toast({ title: "Update user failed. Please try again!" })
         dispatch(updateFailure(data.message))
       } else {
-        console.log("I am running")
         dispatch(updateSuccess(data))
         toast({ title: "User updated successfully." })
       }

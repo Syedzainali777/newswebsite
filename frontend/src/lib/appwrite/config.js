@@ -9,7 +9,7 @@ export const appwriteConfig = {
 if (!appwriteConfig.url || !appwriteConfig.projectId) {
   console.error(
     "Appwrite environment variables are missing. Check your .env file."
-  );
+  );u
 }
 
 export const client = new Client();
