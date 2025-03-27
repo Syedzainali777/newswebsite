@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -8,88 +8,88 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
-import { getFilePreview, uploadFile } from "@/lib/appwrite/uploadImage"
-import React, { useState } from "react"
-import ReactQuill from "react-quill"
-import "react-quill/dist/quill.snow.css"
-import { useNavigate } from "react-router-dom"
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { getFilePreview, uploadFile } from "@/lib/appwrite/uploadImage";
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
-  const { toast } = useToast()
-  const navigate = useNavigate()
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const [file, setFile] = useState(null)
-  const [imageUploadError, setImageUploadError] = useState(null)
-  const [imageUploading, setImageUploading] = useState(false)
+  const [file, setFile] = useState(null);
+  const [imageUploadError, setImageUploadError] = useState(null);
+  const [imageUploading, setImageUploading] = useState(false);
 
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
   // console.log(formData)
 
-  const [createPostError, setCreatePostError] = useState(null)
+  const [createPostError, setCreatePostError] = useState(null);
 
   const handleUploadImage = async () => {
     try {
       if (!file) {
-        setImageUploadError("Please select an image!")
-        toast({ title: "Please select an image!" })
-        return
+        setImageUploadError("Please select an image!");
+        toast({ title: "Please select an image!" });
+        return;
       }
 
-      setImageUploading(true)
+      setImageUploading(true);
 
-      setImageUploadError(null)
+      setImageUploadError(null);
 
-      const uploadedFile = await uploadFile(file)
-      const postImageUrl = getFilePreview(uploadedFile.$id)
+      const uploadedFile = await uploadFile(file);
+      const postImageUrl = getFilePreview(uploadedFile.$id);
 
-      setFormData({ ...formData, image: postImageUrl })
+      setFormData({ ...formData, image: postImageUrl });
 
-      toast({ title: "Image Uploaded Successfully!" })
+      toast({ title: "Image Uploaded Successfully!" });
 
       if (postImageUrl) {
-        setImageUploading(false)
+        setImageUploading(false);
       }
     } catch (error) {
-      setImageUploadError("Image upload failed")
-      console.log(error)
+      setImageUploadError("Image upload failed");
+      console.log(error);
 
-      toast({ title: "Image upload failed!" })
-      setImageUploading(false)
+      toast({ title: "Image upload failed!" });
+      setImageUploading(false);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const res = await fetch("/api/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
-        toast({ title: "Something went wrong! Please try again." })
-        setCreatePostError(data.message)
+        toast({ title: "Something went wrong! Please try again." });
+        setCreatePostError(data.message);
 
-        return
+        return;
       }
 
       if (res.ok) {
-        toast({ title: "Article Published Successfully!" })
-        setCreatePostError(null)
+        toast({ title: "Article Published Successfully!" });
+        setCreatePostError(null);
 
-        navigate(`/post/${data.slug}`)
+        navigate(`/post/${data.slug}`);
       }
     } catch (error) {
-      toast({ title: "Something went wrong! Please try again." })
-      setCreatePostError("Something went wrong! Please try again.")
+      toast({ title: "Something went wrong! Please try again." });
+      setCreatePostError("Something went wrong! Please try again.");
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
@@ -125,6 +125,9 @@ const CreatePost = () => {
                 <SelectItem value="worldnews">World News</SelectItem>
                 <SelectItem value="sportsnews">Sports News</SelectItem>
                 <SelectItem value="localnews">Local News</SelectItem>
+                <SelectItem value="entertainmentnews">
+                  Entertainment News
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -162,7 +165,7 @@ const CreatePost = () => {
           className="h-72  mb-12"
           required
           onChange={(value) => {
-            setFormData({ ...formData, content: value })
+            setFormData({ ...formData, content: value });
           }}
         />
 
@@ -178,7 +181,7 @@ const CreatePost = () => {
         )}
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default CreatePost
+export default CreatePost;

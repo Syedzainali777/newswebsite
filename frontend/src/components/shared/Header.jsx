@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaBars } from "react-icons/fa"; // Import FaBars for menu icon
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,13 +21,11 @@ const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const [searchTerm, setSearchTerm] = useState("");
-  // console.log(searchTerm)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu visibility
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-
     const searchTermFromUrl = urlParams.get("searchTerm");
-
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl);
     }
@@ -38,9 +36,7 @@ const Header = () => {
       const res = await fetch("/api/user/signout", {
         method: "POST",
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         console.log(data.message);
       } else {
@@ -53,13 +49,14 @@ const Header = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("searchTerm", searchTerm);
-
     const searchQuery = urlParams.toString();
-
     navigate(`/search?${searchQuery}`);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -72,43 +69,61 @@ const Header = () => {
           </h1>
         </Link>
 
-        <ul className="flex gap-4">
-          <Link to={"/"}>
-            <li className="hidden lg:inline text-slate-700 hover:underline font-cinzel font-bold">
-              Home
-            </li>
-          </Link>
-
-          <Link to={"/about"}>
-            <li className="hidden lg:inline text-slate-700 hover:underline font-cinzel font-bold">
-              About
-            </li>
-          </Link>
-
-          <Link to={"/news"}>
-            <li className="hidden lg:inline text-slate-700 hover:underline font-cinzel font-bold">
-              News Articles
-            </li>
-          </Link>
-        </ul>
+        {/* Mobile Search (Center) */}
         <form
-          className="p-3 bg-slate-100 rounded-lg flex items-center"
+          className="lg:hidden p-3 bg-slate-100 rounded-lg flex items-center mx-auto"
           onSubmit={handleSubmit}
         >
           <input
             type="text"
-            placeholder="Search Anything"
+            placeholder="Search ..."
             className="focus:outline-none bg-transparent w-24 sm:w-64"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
           <button>
             <FaSearch className="text-slate-600" />
           </button>
         </form>
+
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex gap-4">
+          <Link to={"/"}>
+            <li className="text-slate-700 hover:underline font-cinzel font-bold">
+              Home
+            </li>
+          </Link>
+          <Link to={"/about"}>
+            <li className="text-slate-700 hover:underline font-cinzel font-bold">
+              About
+            </li>
+          </Link>
+          <Link to={"/news"}>
+            <li className="text-slate-700 hover:underline font-cinzel font-bold">
+              News Articles
+            </li>
+          </Link>
+        </ul>
+
+        {/* Desktop Search */}
+        <form
+          className="hidden lg:flex p-3 bg-slate-100 rounded-lg items-center"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            placeholder="Search ..."
+            className="focus:outline-none bg-transparent w-24 sm:w-64"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button>
+            <FaSearch className="text-slate-600" />
+          </button>
+        </form>
+
         {currentUser ? (
-          <DropdownMenu>
+          <DropdownMenu className="hidden lg:block">
             <DropdownMenuTrigger asChild>
               <div>
                 <img
@@ -118,25 +133,20 @@ const Header = () => {
                 />
               </div>
             </DropdownMenuTrigger>
-
             <DropdownMenuContent className="w-60">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
-
               <DropdownMenuSeparator className="bg-gray-400" />
-
               <DropdownMenuItem className="block font-semibold text-sm">
                 <div className="flex flex-col gap-1">
                   <span>@{currentUser.username}</span>
                   <span>@{currentUser.email}</span>
                 </div>
               </DropdownMenuItem>
-
               <DropdownMenuItem className="font-semibold mt-2">
                 <Link to="/dashboard?tab=profile" className="w-full block">
                   Profile
                 </Link>
               </DropdownMenuItem>
-
               <DropdownMenuItem
                 className="font-semibold mt-2"
                 onClick={handleSignout}
@@ -146,11 +156,52 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link to={"/sign-in"}>
-            <Button>Sign In</Button>
-          </Link>
+          <div className="hidden lg:block">
+            <Link to={"/sign-in"}>
+              <Button>Sign In</Button>
+            </Link>
+          </div>
         )}
+
+        {/* Mobile Menu Icon (Right Side) */}
+        <div className="lg:hidden">
+          <button onClick={toggleMobileMenu}>
+            <FaBars className="text-xl" />
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu Content */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white p-4 shadow-md">
+          <ul className="flex flex-col gap-4">
+            <Link to={"/"}>
+              <li className="text-slate-700 hover:underline font-cinzel font-bold">
+                Home
+              </li>
+            </Link>
+            <Link to={"/about"}>
+              <li className="text-slate-700 hover:underline font-cinzel font-bold">
+                About
+              </li>
+            </Link>
+            <Link to={"/news"}>
+              <li className="text-slate-700 hover:underline font-cinzel font-bold">
+                News Articles
+              </li>
+            </Link>
+            {currentUser ? (
+              <li className="font-semibold mt-2" onClick={handleSignout}>
+                Sign Out
+              </li>
+            ) : (
+              <Link to={"/sign-in"}>
+                <Button>Sign In</Button>
+              </Link>
+            )}
+          </ul>
+        </div>
+      )}
     </header>
   );
 };

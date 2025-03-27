@@ -88,8 +88,8 @@ const SignInForm = () => {
             to={"/"}
             className="font-bold text-2xl sm:text-4xl flex flex-wrap"
           >
-            <span className="text-slate-500">Morning</span>
-            <span className="text-slate-900">Dispatch</span>
+            <span className="text-slate-500">Updated</span>
+            <span className="text-slate-900">Pakistan</span>
           </Link>
 
           <h2 className="text-[24px] md:text-[30px] font-bold leading-[140%] tracking-tighter pt-5 sm:pt-12">

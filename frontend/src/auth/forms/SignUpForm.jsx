@@ -97,7 +97,8 @@ const SignUpForm = () => {
           </h2>
 
           <p className="text-slate-500 text-[14px] font-medium leading-[140%] md:text-[16px] md:font-normal mt-2">
-            Welcome to Morning Dispatch, Please provide your details
+            Welcome to Updated Pakistna, Please provide your details to create
+            an account.
           </p>
         </div>
 

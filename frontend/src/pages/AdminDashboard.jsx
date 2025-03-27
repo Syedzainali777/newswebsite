@@ -2,7 +2,6 @@ import BottomNavBar from "@/components/shared/BottomNavBar"
 import DashboardComments from "@/components/shared/DashboardComments"
 import DashboardPosts from "@/components/shared/DashboardPosts "
 import DashboardProfile from "@/components/shared/DashboardProfile"
-import DashboardSidebar from "@/components/shared/DashboardSidebar"
 import DashboardUsers from "@/components/shared/DashboardUsers"
 import MainDashboard from "@/components/shared/MainDashboard"
 import React, { useEffect, useState } from "react"
@@ -25,10 +24,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row w-full">
-      {/* Sidebar */}
-      <div className="hidden md:block">
-        <DashboardSidebar />
-      </div>
 
       <BottomNavBar />
 

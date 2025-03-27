@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -8,92 +8,92 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
-import { getFilePreview, uploadFile } from "@/lib/appwrite/uploadImage"
-import React, { useEffect, useState } from "react"
-import ReactQuill from "react-quill"
-import "react-quill/dist/quill.snow.css"
-import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { getFilePreview, uploadFile } from "@/lib/appwrite/uploadImage";
+import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditPost = () => {
-  const { toast } = useToast()
-  const navigate = useNavigate()
-  const { postId } = useParams()
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const { postId } = useParams();
 
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
 
-  const [file, setFile] = useState(null)
-  const [imageUploadError, setImageUploadError] = useState(null)
-  const [imageUploading, setImageUploading] = useState(false)
+  const [file, setFile] = useState(null);
+  const [imageUploadError, setImageUploadError] = useState(null);
+  const [imageUploading, setImageUploading] = useState(false);
 
-  const [formData, setFormData] = useState({})
-  console.log(formData)
+  const [formData, setFormData] = useState({});
+  console.log(formData);
 
-  const [updatePostError, setUpdatePostError] = useState(null)
+  const [updatePostError, setUpdatePostError] = useState(null);
 
   useEffect(() => {
     try {
       const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`)
+        const res = await fetch(`/api/post/getposts?postId=${postId}`);
 
-        const data = await res.json()
+        const data = await res.json();
 
         if (!res.ok) {
-          console.log(data.message)
-          setUpdatePostError(data.message)
+          console.log(data.message);
+          setUpdatePostError(data.message);
 
-          return
+          return;
         }
 
         if (res.ok) {
-          setUpdatePostError(null)
-          setFormData(data.posts[0])
+          setUpdatePostError(null);
+          setFormData(data.posts[0]);
         }
-      }
+      };
 
-      fetchPost()
+      fetchPost();
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }, [postId])
+  }, [postId]);
 
   const handleUploadImage = async () => {
     try {
       if (!file) {
-        setImageUploadError("Please select an image!")
-        toast({ title: "Please select an image!" })
-        return
+        setImageUploadError("Please select an image!");
+        toast({ title: "Please select an image!" });
+        return;
       }
 
-      setImageUploading(true)
+      setImageUploading(true);
 
-      setImageUploadError(null)
+      setImageUploadError(null);
 
-      const uploadedFile = await uploadFile(file)
-      const postImageUrl = getFilePreview(uploadedFile.$id)
+      const uploadedFile = await uploadFile(file);
+      const postImageUrl = getFilePreview(uploadedFile.$id);
 
-      setFormData({ ...formData, image: postImageUrl })
+      setFormData({ ...formData, image: postImageUrl });
 
-      toast({ title: "Image Uploaded Successfully!" })
+      toast({ title: "Image Uploaded Successfully!" });
 
       if (postImageUrl) {
-        setImageUploading(false)
+        setImageUploading(false);
       }
     } catch (error) {
-      setImageUploadError("Image upload failed")
-      console.log(error)
+      setImageUploadError("Image upload failed");
+      console.log(error);
 
-      toast({ title: "Image upload failed!" })
-      setImageUploading(false)
+      toast({ title: "Image upload failed!" });
+      setImageUploading(false);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    console.log(formData._id)
+    console.log(formData._id);
 
     try {
       const res = await fetch(
@@ -103,28 +103,28 @@ const EditPost = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
-      )
+      );
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
-        toast({ title: "Something went wrong! Please try again." })
-        setUpdatePostError(data.message)
+        toast({ title: "Something went wrong! Please try again." });
+        setUpdatePostError(data.message);
 
-        return
+        return;
       }
 
       if (res.ok) {
-        toast({ title: "Article Published Successfully!" })
-        setUpdatePostError(null)
+        toast({ title: "Article Published Successfully!" });
+        setUpdatePostError(null);
 
-        navigate(`/post/${data.slug}`)
+        navigate(`/post/${data.slug}`);
       }
     } catch (error) {
-      toast({ title: "Something went wrong! Please try again." })
-      setUpdatePostError("Something went wrong! Please try again.")
+      toast({ title: "Something went wrong! Please try again." });
+      setUpdatePostError("Something went wrong! Please try again.");
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
@@ -162,6 +162,9 @@ const EditPost = () => {
                 <SelectItem value="worldnews">World News</SelectItem>
                 <SelectItem value="sportsnews">Sports News</SelectItem>
                 <SelectItem value="localnews">Local News</SelectItem>
+                <SelectItem value="entertainmentnews">
+                  Entertainment News
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -199,7 +202,7 @@ const EditPost = () => {
           className="h-72  mb-12"
           required
           onChange={(value) => {
-            setFormData({ ...formData, content: value })
+            setFormData({ ...formData, content: value });
           }}
           value={formData.content}
         />
@@ -216,7 +219,7 @@ const EditPost = () => {
         )}
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditPost
+export default EditPost;
