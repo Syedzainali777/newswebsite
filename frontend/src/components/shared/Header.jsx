@@ -63,12 +63,12 @@ const Header = () => {
   };
 
   return (
-    <header className="shadow-lg sticky top-0 bg-white">
+    <header className="shadow-lg sticky top-0 bg-white z-50">
       <div className="flex justify-between items-center max-w-6xl lg:max-w-7xl mx-auto p-4">
         <Link to={"/"}>
           <h1 className="font-bold text-xl sm:text-2xl flex flex-wrap">
             <span className="text-slate-500 font-cinzel">Updated</span>
-            <span className="text-slate-900 font-cinzel">Pakistani</span>
+            <span className="text-slate-900 font-cinzel">Pakistan</span>
           </h1>
         </Link>
 

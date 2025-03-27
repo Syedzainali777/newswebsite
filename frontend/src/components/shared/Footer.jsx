@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-gray-800 text-white py-8">
+    <div className="bg-gray-200 text-black py-8">
       <div className="container mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* About Us */}
         <div>
           <h2 className="text-lg font-semibold mb-4">About Us</h2>
-          <p className="text-gray-400 text-sm">
-            UpdatedPakistani is your go-to source for the latest updates on
+          <p className="text-blak-400 text-sm">
+            UpdatedPakistan is your go-to source for the latest updates on
             technology, telecom, business, sports, education, real estate, and
             entertainment in Pakistan. We bring you the most relevant news and
-            updates on everything that matters. Stay ahead of the curve with UpdatedPakistani – Pakistan’s
+            updates on everything that matters. Stay ahead of the curve with UpdatedPakistan – Pakistan’s
             hub for the most reliable and timely news!
           </p>
         </div>
@@ -21,7 +21,7 @@ const Footer = () => {
         <div>
           <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
 
-          <ul className="space-y-2 text-gray-400">
+          <ul className="space-y-2 text-white-400">
             <li>
               <Link to={"/"} className="hover:text-white">
                 Home
@@ -52,7 +52,7 @@ const Footer = () => {
         <div>
           <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
 
-          <p className="text-gray-400 text-sm">Email: ali4205359@gmail.com</p>
+          <p className="text-white-400 text-sm">Email: ali4205359@gmail.com</p>
 
         </div>
       </div>
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
 
         <p className="mt-4">
-          &copy; {new Date().getFullYear()} Updated Pakistani. All rights
+          &copy; {new Date().getFullYear()} Updated Pakistan. All rights
           reserved.
         </p>
       </div>

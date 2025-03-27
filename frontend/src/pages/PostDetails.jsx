@@ -1,70 +1,67 @@
-import Advertise from "@/components/shared/Advertise"
-import CommentSection from "@/components/shared/CommentSection"
-import PostCard from "@/components/shared/PostCard"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import React, { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import Advertise from "@/components/shared/Advertise";
+import RightAdvertisement from "@/components/shared/RightAdvertisement";
+import CommentSection from "@/components/shared/CommentSection";
+import PostCard from "@/components/shared/PostCard";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const PostDetails = () => {
-  const { postSlug } = useParams()
+  const { postSlug } = useParams();
 
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [post, setPost] = useState(null)
-  const [recentArticles, setRecentArticles] = useState(null)
-
-  console.log(recentArticles)
-
-  // console.log(post)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [post, setPost] = useState(null);
+  const [recentArticles, setRecentArticles] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
 
-        const res = await fetch(`/api/post/getposts?slug=${postSlug}`)
+        const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
 
-        const data = await res.json()
+        const data = await res.json();
 
         if (!res.ok) {
-          setError(true)
-          setLoading(false)
+          setError(true);
+          setLoading(false);
 
-          return
+          return;
         }
 
         if (res.ok) {
-          setPost(data.posts[0])
-          setLoading(false)
-          setError(true)
+          setPost(data.posts[0]);
+          setLoading(false);
+          setError(true);
         }
       } catch (error) {
-        setError(true)
-        setLoading(false)
+        setError(true);
+        setLoading(false);
       }
-    }
+    };
 
-    fetchPost()
-  }, [postSlug])
+    fetchPost();
+  }, [postSlug]);
 
   useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const res = await fetch(`/api/post/getposts?limit=3`)
+        const res = await fetch(`/api/post/getposts?limit=3`);
 
-        const data = await res.json()
+        const data = await res.json();
 
         if (res.ok) {
-          setRecentArticles(data.posts)
+          setRecentArticles(data.posts);
         }
-      }
+      };
 
-      fetchRecentPosts()
+      fetchRecentPosts();
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }, [])
+  }, []);
 
   if (loading) {
     return (
@@ -75,7 +72,7 @@ const PostDetails = () => {
           className="w-20 animate-spin"
         />
       </div>
-    )
+    );
   }
 
   return (
@@ -109,10 +106,18 @@ const PostDetails = () => {
 
       <Separator className="bg-slate-500" />
 
-      <div
-        className="p-3 max-w-3xl mx-auto w-full post-content"
-        dangerouslySetInnerHTML={{ __html: post && post.content }}
-      ></div>
+      <div className="flex max-w-6xl mx-auto w-full gap-6">
+        {/* Post Content */}
+        <div
+          className="p-3 w-full post-content"
+          dangerouslySetInnerHTML={{ __html: post && post.content }}
+        ></div>
+
+        {/* Right Advertisement (Hidden on Mobile) */}
+        <div className="hidden lg:block w-1/4 md:block">
+          <RightAdvertisement />
+        </div>
+      </div>
 
       <div className="max-w-4xl mx-auto w-full">
         <Advertise />
@@ -133,7 +138,7 @@ const PostDetails = () => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default PostDetails
+export default PostDetails;
