@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const PostCard = ({ post }) => {
   return (
-    <div className="bg-white rounded-lg overflow-hidden relative w-full sm:w-[330px] transition-transform duration-300 hover:scale-105">
+    <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden relative w-full sm:w-[330px] transition-transform duration-300 hover:scale-105 shadow-lg dark:shadow-none">
       {/* Image with overlay for gradient effect */}
-      <div className="relative h-[250px] w-[340] overflow-hidden">
+      <div className="relative h-[250px] w-full overflow-hidden">
         <img
           src={post.image}
           alt="post cover"

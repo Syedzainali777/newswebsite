@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   server: {
     host: true, // Allows accessing the dev server from the local network
-    port: 3000, // Explicitly define a port instead of the default 5173
+    port: 3000, // Explicitly define a port instead of the default 3000
     proxy: {
       "/api": {
         target: "http://localhost:5000",

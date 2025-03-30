@@ -29,28 +29,20 @@ const EditPost = () => {
   const [imageUploading, setImageUploading] = useState(false);
 
   const [formData, setFormData] = useState({});
-  console.log(formData);
-
   const [updatePostError, setUpdatePostError] = useState(null);
 
   useEffect(() => {
     try {
       const fetchPost = async () => {
         const res = await fetch(`/api/post/getposts?postId=${postId}`);
-
         const data = await res.json();
 
         if (!res.ok) {
-          console.log(data.message);
           setUpdatePostError(data.message);
-
           return;
         }
 
-        if (res.ok) {
-          setUpdatePostError(null);
-          setFormData(data.posts[0]);
-        }
+        setFormData(data.posts[0]);
       };
 
       fetchPost();
@@ -68,23 +60,17 @@ const EditPost = () => {
       }
 
       setImageUploading(true);
-
       setImageUploadError(null);
 
       const uploadedFile = await uploadFile(file);
       const postImageUrl = getFilePreview(uploadedFile.$id);
 
       setFormData({ ...formData, image: postImageUrl });
-
       toast({ title: "Image Uploaded Successfully!" });
 
-      if (postImageUrl) {
-        setImageUploading(false);
-      }
+      setImageUploading(false);
     } catch (error) {
       setImageUploadError("Image upload failed");
-      console.log(error);
-
       toast({ title: "Image upload failed!" });
       setImageUploading(false);
     }
@@ -92,8 +78,6 @@ const EditPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData._id);
 
     try {
       const res = await fetch(
@@ -110,16 +94,11 @@ const EditPost = () => {
       if (!res.ok) {
         toast({ title: "Something went wrong! Please try again." });
         setUpdatePostError(data.message);
-
         return;
       }
 
-      if (res.ok) {
-        toast({ title: "Article Published Successfully!" });
-        setUpdatePostError(null);
-
-        navigate(`/post/${data.slug}`);
-      }
+      toast({ title: "Article Updated Successfully!" });
+      navigate(`/post/${data.slug}`);
     } catch (error) {
       toast({ title: "Something went wrong! Please try again." });
       setUpdatePostError("Something went wrong! Please try again.");
@@ -127,19 +106,20 @@ const EditPost = () => {
   };
 
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold text-slate-700">
-        Edit post
+    <div className="p-3 max-w-3xl mx-auto min-h-screen bg-white dark:bg-gray-900 text-slate-700 dark:text-gray-300">
+      <h1 className="text-center text-3xl my-7 font-semibold text-slate-700 dark:text-gray-300">
+        Edit Post
       </h1>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        {/* Title and Category */}
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
           <Input
             type="text"
             placeholder="Title"
             required
             id="title"
-            className="w-full sm:w-3/4 h-12 border border-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="w-full sm:w-3/4 h-12 border border-slate-400 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0"
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
@@ -152,7 +132,7 @@ const EditPost = () => {
             }
             value={formData.category}
           >
-            <SelectTrigger className="w-full sm:w-1/4 h-12 border border-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0">
+            <SelectTrigger className="w-full sm:w-1/4 h-12 border border-slate-400 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0">
               <SelectValue placeholder="Select a Category" />
             </SelectTrigger>
 
@@ -170,16 +150,18 @@ const EditPost = () => {
           </Select>
         </div>
 
-        <div className="flex gap-4 items-center justify-between border-4 border-slate-600 border-dotted p-3">
+        {/* Image Upload */}
+        <div className="flex gap-4 items-center justify-between border-4 border-slate-600 dark:border-gray-600 border-dotted p-3 bg-white dark:bg-gray-800">
           <Input
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
+            className="text-slate-700 dark:text-gray-300"
           />
 
           <Button
             type="button"
-            className="bg-slate-700"
+            className="bg-slate-700 dark:bg-gray-700 text-white"
             onClick={handleUploadImage}
           >
             {imageUploading ? "Uploading..." : "Upload Image"}
@@ -196,10 +178,11 @@ const EditPost = () => {
           />
         )}
 
+        {/* Content Editor */}
         <ReactQuill
           theme="snow"
           placeholder="Write something here..."
-          className="h-72  mb-12"
+          className="h-72 mb-12 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300"
           required
           onChange={(value) => {
             setFormData({ ...formData, content: value });
@@ -207,9 +190,10 @@ const EditPost = () => {
           value={formData.content}
         />
 
+        {/* Submit Button */}
         <Button
           type="submit"
-          className="h-12 bg-green-600 font-semibold max-sm:mt-5 text-md"
+          className="h-12 bg-green-600 dark:bg-green-700 font-semibold max-sm:mt-5 text-md text-white"
         >
           Update Your Article
         </Button>

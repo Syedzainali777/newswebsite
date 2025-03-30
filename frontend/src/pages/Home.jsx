@@ -23,13 +23,14 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      {/* first section of new post for the card */}
-
+    <div className="bg-white dark:bg-gray-900 text-slate-700 dark:text-gray-300">
+      {/* First section of new posts */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-bold text-slate-700">Recent Posts</h2>
+            <h2 className="text-2xl font-bold text-slate-700 dark:text-gray-300">
+              Recent Posts
+            </h2>
 
             <div className="flex flex-wrap gap-4">
               {posts.map((post) => (
@@ -39,22 +40,26 @@ const Home = () => {
 
             <Link
               to={"/search"}
-              className="text-lg hover:underline text-center font-semibold"
+              className="text-lg hover:underline text-center font-semibold text-slate-700 dark:text-gray-300"
             >
               View all news
             </Link>
           </div>
         )}
       </div>
-      <div className="p-3 bg-white">
+
+      {/* Advertisement Section */}
+      <div className="p-3 bg-white dark:bg-gray-800">
         <Advertise />
       </div>
-      {/* second section of new post for the card */}
 
+      {/* Second section: Sports News */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-bold text-slate-700">Sports News</h2>
+            <h2 className="text-2xl font-bold text-slate-700 dark:text-gray-300">
+              Sports News
+            </h2>
 
             <div className="flex flex-wrap gap-4">
               {posts
@@ -66,22 +71,25 @@ const Home = () => {
 
             <Link
               to={"/search"}
-              className="text-lg hover:underline text-center font-semibold"
+              className="text-lg hover:underline text-center font-semibold text-slate-700 dark:text-gray-300"
             >
               View all news
             </Link>
           </div>
         )}
       </div>
-      {/* Third section of new post for the card */}
+
+      {/* Third section: Entertainment News */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-bold text-slate-700">Entertainment News</h2>
+            <h2 className="text-2xl font-bold text-slate-700 dark:text-gray-300">
+              Entertainment News
+            </h2>
 
             <div className="flex flex-wrap gap-4">
               {posts
-                ?.filter((post) => post.category === "sportsnews")
+                ?.filter((post) => post.category === "entertainmentnews")
                 ?.map((post) => (
                   <SmallPostCard key={post._id} post={post} />
                 ))}
@@ -89,7 +97,7 @@ const Home = () => {
 
             <Link
               to={"/search"}
-              className="text-lg hover:underline text-center font-semibold"
+              className="text-lg hover:underline text-center font-semibold text-slate-700 dark:text-gray-300"
             >
               View all news
             </Link>

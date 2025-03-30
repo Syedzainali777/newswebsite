@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SmallPostCard = ({ post }) => {
   return (
-    <div className="bg-white rounded-lg lg:w-[550px] sm:w-[450px] overflow-hidden relative shadow-lg grid grid-cols-2 transition-transform duration-300 hover:scale-105">
+    <div className="bg-white dark:bg-gray-800 rounded-lg lg:w-[550px] sm:w-[450px] overflow-hidden relative shadow-lg dark:shadow-none grid grid-cols-2 transition-transform duration-300 hover:scale-105">
       {/* Image (Left Side) */}
       <div className="relative h-[190px]">
         <img
@@ -15,13 +15,14 @@ const SmallPostCard = ({ post }) => {
 
       {/* Content (Right Side) */}
       <div className="p-4">
-        <h5 className="text-lg font-semibold mb-2 line-clamp-1">
+        <h5 className="text-lg font-semibold mb-2 line-clamp-1 text-slate-800 dark:text-gray-300">
           {post.title}
         </h5>
-        <p className="text-base text-gray-600 mb-4 line-clamp-4">
+        <p className="text-base text-gray-600 dark:text-gray-400 mb-4 line-clamp-4">
           {post.content}
         </p>
       </div>
+
       {/* Hidden link for full article */}
       <Link
         to={`/post/${post.slug}`}

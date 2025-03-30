@@ -1,39 +1,41 @@
-import { signOutSuccess } from "@/redux/user/userSlice"
-import React from "react"
-import { FaComments, FaSignOutAlt, FaUserAlt, FaUsers } from "react-icons/fa"
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { IoIosCreate, IoIosDocument } from "react-icons/io"
-import { MdDashboardCustomize } from "react-icons/md"
+import { signOutSuccess } from "@/redux/user/userSlice";
+import React from "react";
+import { FaComments, FaSignOutAlt, FaUserAlt, FaUsers } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { IoIosCreate, IoIosDocument } from "react-icons/io";
+import { MdDashboardCustomize } from "react-icons/md";
 
 const DashboardSidebar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleSignout = async () => {
     try {
       const res = await fetch("/api/user/signout", {
         method: "POST",
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
-        console.log(data.message)
+        console.log(data.message);
       } else {
-        dispatch(signOutSuccess())
+        dispatch(signOutSuccess());
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
-    <aside className="h-screen w-64 bg-slate-200 text-slate-800 flex flex-col">
+    <aside className="h-screen w-64 bg-slate-200 dark:bg-gray-900 text-slate-800 dark:text-gray-300 flex flex-col">
       {/* Logo/ Header */}
-      <div className="p-4 flex items-center justify-center bg-slate-200">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+      <div className="p-4 flex items-center justify-center bg-slate-200 dark:bg-gray-800">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-gray-300">
+          Dashboard
+        </h1>
       </div>
 
       {/* Navigation Links */}
@@ -43,7 +45,7 @@ const DashboardSidebar = () => {
             <li>
               <Link
                 to={"/dashboard?tab=dashboard"}
-                className="flex items-center p-2 hover:bg-slate-300 rounded"
+                className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
               >
                 <MdDashboardCustomize className="mr-3" />
                 <span>Dashboard</span>
@@ -54,7 +56,7 @@ const DashboardSidebar = () => {
           <li>
             <Link
               to={"/dashboard?tab=profile"}
-              className="flex items-center p-2 hover:bg-slate-300 rounded"
+              className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
             >
               <FaUserAlt className="mr-3" />
               <span>Profile</span>
@@ -65,7 +67,7 @@ const DashboardSidebar = () => {
             <li>
               <Link
                 to={"/create-post"}
-                className="flex items-center p-2 hover:bg-slate-300 rounded"
+                className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
               >
                 <IoIosCreate className="mr-3" />
                 <span>Create Post</span>
@@ -77,7 +79,7 @@ const DashboardSidebar = () => {
             <li>
               <Link
                 to={"/dashboard?tab=posts"}
-                className="flex items-center p-2 hover:bg-slate-300 rounded"
+                className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
               >
                 <IoIosDocument className="mr-3" />
                 <span>Your articles</span>
@@ -89,7 +91,7 @@ const DashboardSidebar = () => {
             <li>
               <Link
                 to={"/dashboard?tab=users"}
-                className="flex items-center p-2 hover:bg-slate-300 rounded"
+                className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
               >
                 <FaUsers className="mr-3" />
                 <span>All Users</span>
@@ -101,7 +103,7 @@ const DashboardSidebar = () => {
             <li>
               <Link
                 to={"/dashboard?tab=comments"}
-                className="flex items-center p-2 hover:bg-slate-300 rounded"
+                className="flex items-center p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
               >
                 <FaComments className="mr-3" />
                 <span>All Comments</span>
@@ -110,9 +112,9 @@ const DashboardSidebar = () => {
           )}
         </ul>
 
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4 border-t border-gray-300 dark:border-gray-700">
           <button
-            className="flex items-center w-full p-2 hover:bg-slate-300 rounded"
+            className="flex items-center w-full p-2 hover:bg-slate-300 dark:hover:bg-gray-700 rounded"
             onClick={handleSignout}
           >
             <FaSignOutAlt className="mr-3" />
@@ -121,7 +123,7 @@ const DashboardSidebar = () => {
         </div>
       </nav>
     </aside>
-  )
-}
+  );
+};
 
-export default DashboardSidebar
+export default DashboardSidebar;

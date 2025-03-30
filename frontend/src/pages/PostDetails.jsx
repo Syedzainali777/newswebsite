@@ -34,7 +34,7 @@ const PostDetails = () => {
         if (res.ok) {
           setPost(data.posts[0]);
           setLoading(false);
-          setError(true);
+          setError(false);
         }
       } catch (error) {
         setError(true);
@@ -65,7 +65,7 @@ const PostDetails = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-800">
         <img
           src="https://cdn-icons-png.flaticon.com/128/39/39979.png"
           alt="loading"
@@ -76,8 +76,8 @@ const PostDetails = () => {
   }
 
   return (
-    <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
-      <h1 className="text-3xl mt-10 p-3 text-center font-bold max-w-3xl mx-auto lg:text-4xl text-slate-700 underline">
+    <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+      <h1 className="text-3xl mt-10 p-3 text-center font-bold max-w-3xl mx-auto lg:text-4xl text-gray-800 dark:text-gray-200 underline">
         {post && post.title}
       </h1>
 
@@ -85,7 +85,10 @@ const PostDetails = () => {
         to={`/search?category=${post && post.category}`}
         className="self-center mt-5"
       >
-        <Button variant="outline" className="border border-slate-500">
+        <Button
+          variant="outline"
+          className="border border-gray-500 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+        >
           {post && post.category}
         </Button>
       </Link>
@@ -96,7 +99,7 @@ const PostDetails = () => {
         className="mt-10 p-3 max-h-[500px] w-full object-cover"
       />
 
-      <div className="flex justify-between p-3 mx-auto w-full max-w-2xl text-xs">
+      <div className="flex justify-between p-3 mx-auto w-full max-w-2xl text-xs text-gray-600 dark:text-gray-400">
         <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
 
         <span className="italic">
@@ -104,12 +107,12 @@ const PostDetails = () => {
         </span>
       </div>
 
-      <Separator className="bg-slate-500" />
+      <Separator className="bg-gray-500 dark:bg-gray-600" />
 
       <div className="flex max-w-6xl mx-auto w-full gap-6">
         {/* Post Content */}
         <div
-          className="p-3 w-full post-content"
+          className="p-3 w-full post-content text-gray-800 dark:text-gray-200"
           dangerouslySetInnerHTML={{ __html: post && post.content }}
         ></div>
 
@@ -126,7 +129,7 @@ const PostDetails = () => {
       <CommentSection postId={post._id} />
 
       <div className="flex flex-col justify-center items-center mb-5">
-        <h1 className="text-xl font-semibold mt-5 text-slate-700">
+        <h1 className="text-xl font-semibold mt-5 text-gray-800 dark:text-gray-200">
           Recently published articles
         </h1>
 
